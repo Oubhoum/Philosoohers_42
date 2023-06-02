@@ -44,3 +44,4 @@ int	ft_atoi(const char *str);
 int	check_arg(int ac, char **av);
 
 #endif
+
