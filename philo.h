@@ -6,7 +6,7 @@
 /*   By: aoubhoum <aoubhoum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 18:57:35 by aoubhoum          #+#    #+#             */
-/*   Updated: 2023/05/15 14:12:35 by aoubhoum         ###   ########.fr       */
+/*   Updated: 2023/06/04 17:12:44 by aoubhoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,21 @@ typedef struct s_var
 	int	tm_die;
 	int	tm_sleep;
 	int tm_eat;
+	pthread_mutex_t	last_eat_mutex;
 
 }   t_var;
+
+typedef	struct	s_print
+{
+	pthread_mutex_t	ferst_mutex;
+	pthread_mutex_t	second_mutex;
+}	t_print;
 
 typedef struct s_philo
 {
 	pthread_t       th;
-	t_var			var;
+	long long start_time;
+	t_var			*var;
 	int				id_philo;
 	pthread_mutex_t	mtx_left_fork;
 	pthread_mutex_t	*mtx_r_fork;
@@ -42,6 +50,12 @@ typedef struct s_philo
 int	ft_isdigit(int c);
 int	ft_atoi(const char *str);
 int	check_arg(int ac, char **av);
+
+//========================= utils2 ================
+
+long long	get_time();
+void	sleep_re_imple(int time);
+void	check_death(t_philo *philo);
 
 #endif
 
