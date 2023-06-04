@@ -12,54 +12,33 @@
 
 #include "philo.h"
 
-
-// void	*routine(void *arg)
-// {
-// 	t_var	*var = (t_var)arg;
-
-// 	pthread_mutex_lock(&var.mutex);
-// 	int philosophers = var->id_philo;
-// 	int i = 0;
-// 	while (i  < philosophers)
-// 	{
-// 		printf("Routine %d\n", i + 1);
-// 		i++;
-// 		sleep(1);
-// 	}
-// 	printf("=====================\n");
-// 	pthread_mutex_unlock(&var.mutex);
-// }
+static long long	get_time()
+{
+	struct timeval currentTime;
+	gettimeofday(&currentTime, NULL);
+	return (currentTime.tv_sec * 1000LL + currentTime.tv_usec / 1000LL);
+}
 
 void	*routine(void *arg)
 {
 	t_philo *philo = (t_philo *)arg;
-	
+	struct timeval tv;
 	while (1)
 	{
-		// boucle infinie
-		// locki left;
 		pthread_mutex_lock(&philo->mtx_left_fork);
 		printf("%d has taken left fork\n", philo->id_philo);
-		// printi : has taken a fork;
-		// locki right;
 		pthread_mutex_lock(philo->mtx_r_fork);
 		printf("%d has taken right fork\n", philo->id_philo);
-		// printi : has taken a fork;
-		// printi is eating;
 		printf("%d if eating\n", philo->id_philo);
-		// last_eat = lo9t fach bda lmakla;
-		// usleep(t_eat);
+		gettimeofday(&tv, NULL);
+		philo->last_eat = get_time();
 		usleep(philo->var.tm_eat);
-		// unlock right;
 		pthread_mutex_unlock(&philo->mtx_left_fork);
-		//	unock left; 
+		printf("%d has put left fork\n", philo->id_philo);
 		pthread_mutex_unlock(philo->mtx_r_fork);
-		// printi  id sleeping
+		printf("%d has put right fork\n", philo->id_philo);
 		printf("%d is sleep\n", philo->id_philo);
-		// usleep(t_sleep);
-		// usleep(philo->var.tm_sleep);
-		sleep(1);
-		// printi is thinking
+		usleep(philo->var.tm_sleep);
 		printf("%d is thinking\n", philo->id_philo);
 	}
 	
@@ -71,24 +50,17 @@ int main(int argc, char **argv)
 {
 	t_var var;
 	t_philo *philo;
-	// t_philo *philo;
+	struct timeval tv;
+	int current_time;
 	var.nb_philo = ft_atoi(argv[1]);
 	var.tm_die = ft_atoi(argv[2]);
 	var.tm_eat = ft_atoi(argv[3]);
 	var.tm_sleep = ft_atoi(argv[4]);
 
-	// philo = malloc(sizeof(t_philo) * var.nb_philo);
-	// printf("=====================\n");
 	if (!check_arg(argc, argv))
 		printf("======= KO :( =======\n");
 	else
 		printf("OK :)\n");
-	// printf("=====================\n");
-	// philo.th = malloc(sizeof(t_philo) * var.nb_philo);
-	// if (!philo.th)
-		// return(0);
-	// pthread_mutex_init(&philo.mtx_left_fork, NULL);
-	// pthread_mutex_init(&philo.mtx_r_fork, NULL);
 	int i = 0;
 
 	philo = malloc(sizeof(t_philo) * var.nb_philo);
@@ -113,14 +85,20 @@ int main(int argc, char **argv)
 	}
 	while (1)
 	{
+		long long	current_time_in_seconds = get_time();
 		//checki wach khouna waslo lwa9t bach imoot
+		// if (philo[i].last_eat * 10000 - current_time * 1000 >= philo->var.tm_die)
+		// 	return(0);
 		// tdie == last eat - lwa9t diyal drook
-	};
+		// printf("Time of last eat is: %lld\n", philo->last_eat);
+		// printf("Current time is: %lld\n", current_time_in_seconds);
+		// sleep(1);
+	}
 	//moniroting
 	// checki last eat m3a  t_die;
 	// printi is died;
 	// krej
 	// pthread_mutex_destroy(&philo[i].mtx_left_fork);
-	// pthread_mutex_destroy(&philo[i].mtx_r_fork);
+	// pthread_mutex_destroy(philo[i].mtx_r_fork);
 	return (0);
 }

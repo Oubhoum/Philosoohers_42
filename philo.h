@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct s_var
 {
@@ -34,8 +35,7 @@ typedef struct s_philo
 	int				id_philo;
 	pthread_mutex_t	mtx_left_fork;
 	pthread_mutex_t	*mtx_r_fork;
-	int				last_eat;
-	//struct s_philo *next;
+	long long		last_eat;
 }	t_philo;
 
 

@@ -1,45 +1,35 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
 
-int mails = 0;
-// int lock = 0;
-pthread_mutex_t mutex;
+FILE	*log_file;
+int		incidents = 0;
 
-void *routine()
+int	main(void)
 {
-    for (int i = 0; i < 100000; i++) {
-        pthread_mutex_lock(&mutex);
-        mails++;
-        pthread_mutex_unlock(&mutex);
-        // read mails
-        // increment
-        // write mails
-    }
-}
-int main(void)
-{
-    pthread_t th[8];
-    int i;
-    pthread_mutex_init(&mutex, NULL);
-    for (i = 0; i < 8; i++)
-    {
-        if (pthread_create(th + i, NULL, &routine, NULL) != 0)
-        {
-            perror("Failed to create thread");
-            return (1);
-        }
-        printf("Thread %d has started\n", i + 1);
-    }
-    for (i = 0; i < 8; i++)
-    {
-        if (pthread_join(th[i], NULL) != 0)
-        {
-            return (2);
-        }
-        printf("Thread %d has finished execution\n", i + 1);
-    }
-    pthread_mutex_destroy(&mutex);
-    printf("Number of mails: %d\n", mails);
-    return (0);
+	log_file = fopen("log.txt", "w");
+	if (log_file == NULL)
+	{
+		printf("Error oopening file.\n");
+		return (1);
+	}
+
+	pthread_t	thread;
+	int	return_value = 0;
+	return_value = pthread_create(&thread, NULL, &logger, NULL);
+	if (return_value != 0) return 1;
+	return_value = pthread_detach(thread);
+	if (return_value != 0) return 1;
+
+	int input = 0;
+	do
+	{
+		printf("Enter -1 to quit.\n");
+		printf("New incidents: ");
+		scanf("%d", &input);
+
+		if (input != -1) incidents += input;
+	} while (input != -1);
+	
+
+	return (0);
 }
