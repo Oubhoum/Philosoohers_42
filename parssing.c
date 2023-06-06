@@ -6,7 +6,7 @@
 /*   By: aoubhoum <aoubhoum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 19:06:13 by aoubhoum          #+#    #+#             */
-/*   Updated: 2023/05/12 11:52:26 by aoubhoum         ###   ########.fr       */
+/*   Updated: 2023/06/06 14:14:57 by aoubhoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_arg(int ac, char **av)
 	int	i;
 	int	j;
 
-	if (ac != 5)
+	if (!(ac == 6 || ac == 5))
 		return (0);
 	i = 1;
 	while (av[i])
