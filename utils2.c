@@ -6,7 +6,7 @@
 /*   By: aoubhoum <aoubhoum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 15:06:12 by aoubhoum          #+#    #+#             */
-/*   Updated: 2023/06/06 18:05:33 by aoubhoum         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:11:42 by aoubhoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	sleep_re_imple(int time)
 		usleep(100);
 }
 
-void	check_death(t_philo *philo, int ac)
+int	check_death(t_philo *philo, int ac)
 {
 	int	i;
 
@@ -38,23 +38,22 @@ void	check_death(t_philo *philo, int ac)
 		i = 0;
 		while (i < philo->var->nb_philo)
 		{
+			pthread_mutex_lock(&philo[i].var->last_eat_mutex);
 			if (get_time() - philo[i].last_eat >= philo[i].var->tm_die)
 			{
+				pthread_mutex_unlock(&philo[i].var->last_eat_mutex);
 				printf("%lld %d is died\n", get_time()
 					- philo[i].start_time, philo[i].id_philo);
-				return ;
+				return (0);
 			}
+			pthread_mutex_unlock(&philo[i].var->last_eat_mutex);
 			if (ac == 6)
-			{
-				if (philo[i].counter >= philo[i].var->eat_tims)
-				{
-					printf("salaw\n");
-					return;
-				}
-			}
+				if (philo[i].counter > philo[i].var->eat_tims)
+					return (0);
 			i++;
 		}
 	}
+	return (1);
 }
 
 //This function to initalise all eating_tims of eche philosofer by zero
@@ -72,29 +71,16 @@ void	init_eat_tims(int nbr_philo, t_philo *philo)
 	}
 }
 
-int	check_eat_philo(t_philo *philo, t_var var)
-{
-	int	i;
+// int	check_eat_philo(t_philo *philo, t_var var)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < var.nb_philo)
-	{
-		if (philo[i].counter >= var.eat_tims)
-			return(printf("salaw\n"), 0);
-		i++;
-	}
-	return(0);
-}
-
-int	init_params(int ac, t_var *var, char **av)
-{
-	if (!check_arg(ac, av))
-		return (printf("======= KO :( =======\nParcing Error\n"), 0);
-	var->nb_philo = ft_atoi(av[1]);
-	var->tm_die = ft_atoi(av[2]);
-	var->tm_eat = ft_atoi(av[3]);
-	var->tm_sleep = ft_atoi(av[4]);
-	if (ac == 6)
-		var->eat_tims = ft_atoi(av[5]);
-	return (1);
-}
+// 	i = 0;
+// 	while (i < var.nb_philo)
+// 	{
+// 		if (philo[i].counter >= var.eat_tims)
+// 			return(printf("salaw\n"), 0);
+// 		i++;
+// 	}
+// 	return(0);
+// }

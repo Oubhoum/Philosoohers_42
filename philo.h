@@ -6,7 +6,7 @@
 /*   By: aoubhoum <aoubhoum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 18:57:35 by aoubhoum          #+#    #+#             */
-/*   Updated: 2023/06/06 18:04:19 by aoubhoum         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:48:07 by aoubhoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,11 @@ int	check_arg(int ac, char **av);
 
 long long int	get_time(void);
 void			sleep_re_imple(int time);
-void			check_death(t_philo *philo, int ac);
+int				check_death(t_philo *philo, int ac);
 void			init_eat_tims(int nbr_philo, t_philo *philo);
-int				check_eat_philo(t_philo *philo, t_var var);
+// int				check_eat_philo(t_philo *philo, t_var var);
 int				init_params(int ac, t_var *var, char **av);
+void			handel_dedlock_and_norm(t_philo *philo);
 
 #endif
 
