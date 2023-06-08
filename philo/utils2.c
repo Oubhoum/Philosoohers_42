@@ -6,7 +6,7 @@
 /*   By: aoubhoum <aoubhoum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 15:06:12 by aoubhoum          #+#    #+#             */
-/*   Updated: 2023/06/07 16:11:42 by aoubhoum         ###   ########.fr       */
+/*   Updated: 2023/06/08 13:43:54 by aoubhoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,19 @@ int	check_death(t_philo *philo, int ac)
 			pthread_mutex_lock(&philo[i].var->last_eat_mutex);
 			if (get_time() - philo[i].last_eat >= philo[i].var->tm_die)
 			{
-				pthread_mutex_unlock(&philo[i].var->last_eat_mutex);
 				printf("%lld %d is died\n", get_time()
 					- philo[i].start_time, philo[i].id_philo);
 				return (0);
 			}
-			pthread_mutex_unlock(&philo[i].var->last_eat_mutex);
 			if (ac == 6)
 				if (philo[i].counter > philo[i].var->eat_tims)
 					return (0);
+			pthread_mutex_unlock(&philo[i].var->last_eat_mutex);
 			i++;
 		}
 	}
 	return (1);
 }
-
-//This function to initalise all eating_tims of eche philosofer by zero
-//	to be able to incremet it.
 
 void	init_eat_tims(int nbr_philo, t_philo *philo)
 {
@@ -70,17 +66,3 @@ void	init_eat_tims(int nbr_philo, t_philo *philo)
 		i++;
 	}
 }
-
-// int	check_eat_philo(t_philo *philo, t_var var)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < var.nb_philo)
-// 	{
-// 		if (philo[i].counter >= var.eat_tims)
-// 			return(printf("salaw\n"), 0);
-// 		i++;
-// 	}
-// 	return(0);
-// }

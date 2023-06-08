@@ -6,7 +6,7 @@
 /*   By: aoubhoum <aoubhoum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 18:57:35 by aoubhoum          #+#    #+#             */
-/*   Updated: 2023/06/07 15:48:07 by aoubhoum         ###   ########.fr       */
+/*   Updated: 2023/06/08 13:42:53 by aoubhoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,14 @@ typedef struct s_philo
 	int				counter;
 }	t_philo;
 
-int	ft_isdigit(int c);
-int	ft_atoi(const char *str);
-int	check_arg(int ac, char **av);
-
-//========================= utils2 ================
-
-long long int	get_time(void);
+int				ft_isdigit(int c);
+int				ft_atoi(const char *str);
+int				check_arg(int ac, char **av);
 void			sleep_re_imple(int time);
 int				check_death(t_philo *philo, int ac);
 void			init_eat_tims(int nbr_philo, t_philo *philo);
-// int				check_eat_philo(t_philo *philo, t_var var);
 int				init_params(int ac, t_var *var, char **av);
 void			handel_dedlock_and_norm(t_philo *philo);
+long long int	get_time(void);
 
 #endif
-
