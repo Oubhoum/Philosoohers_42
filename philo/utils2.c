@@ -6,7 +6,7 @@
 /*   By: aoubhoum <aoubhoum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 15:06:12 by aoubhoum          #+#    #+#             */
-/*   Updated: 2023/06/08 13:43:54 by aoubhoum         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:00:44 by aoubhoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,17 @@ int	check_death(t_philo *philo, int ac)
 {
 	int	i;
 
+	philo->var->a = 1;
 	while (1)
 	{
 		i = 0;
 		while (i < philo->var->nb_philo)
 		{
 			pthread_mutex_lock(&philo[i].var->last_eat_mutex);
-			if (get_time() - philo[i].last_eat >= philo[i].var->tm_die)
+			if (get_time() - philo[i].last_eat > philo[i].var->tm_die)
 			{
-				printf("%lld %d is died\n", get_time()
-					- philo[i].start_time, philo[i].id_philo);
+				philo->var->a = 0;
+				my_printf(philo[i].last_eat, "is died\n", philo);
 				return (0);
 			}
 			if (ac == 6)
@@ -65,4 +66,14 @@ void	init_eat_tims(int nbr_philo, t_philo *philo)
 		philo[i].counter = 0;
 		i++;
 	}
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

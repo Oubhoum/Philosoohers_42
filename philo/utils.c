@@ -6,7 +6,7 @@
 /*   By: aoubhoum <aoubhoum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 19:17:55 by aoubhoum          #+#    #+#             */
-/*   Updated: 2023/06/08 13:36:14 by aoubhoum         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:00:06 by aoubhoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,12 @@ void	handel_dedlock_and_norm(t_philo *philo)
 {
 	if (philo->id_philo % 2 == 0)
 		sleep_re_imple(200);
+}
+
+void	my_printf(long long time, char *msg, t_philo *philo)
+{
+	pthread_mutex_lock(&philo->var->print_mutex);
+	printf("%lld %d %s", get_time() - time, philo->id_philo, msg);
+	if (ft_strcmp(msg, "is died\n") != 0)
+		pthread_mutex_unlock(&philo->var->print_mutex);
 }
