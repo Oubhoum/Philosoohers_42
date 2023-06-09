@@ -6,7 +6,7 @@
 /*   By: aoubhoum <aoubhoum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 15:06:12 by aoubhoum          #+#    #+#             */
-/*   Updated: 2023/06/09 18:00:44 by aoubhoum         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:29:51 by aoubhoum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	check_death(t_philo *philo, int ac)
 	philo->var->a = 1;
 	while (1)
 	{
+		sleep_re_imple(7);
 		i = 0;
 		while (i < philo->var->nb_philo)
 		{
